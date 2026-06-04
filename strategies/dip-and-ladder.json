@@ -1,0 +1,19 @@
+{
+  "name": "Dip & Ladder",
+  "description": "Ladder limit buys near recent support across a small basket. Observational, not advice.",
+  "author": "you",
+  "universe": ["BTC", "ETH"],
+  "budget_usd": 30,
+  "entry": {
+    "side": "BUY",
+    "type": "LIMIT",
+    "anchor": "support",
+    "legs_per_asset": 2,
+    "spacing_pct": 1.5
+  },
+  "exit": {
+    "take_profit_pct": 6,
+    "note": "Shown as a level. Place as a TAKE_PROFIT_LIMIT sell only if you hold the asset."
+  },
+  "spot_only": true
+}

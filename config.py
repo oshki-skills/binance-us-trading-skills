@@ -18,7 +18,7 @@ MAX_ORDER_USD = 15          # or None for no cap
 SYMBOL_ALLOWLIST = None     # or e.g. {"BTCUSD", "ETHUSD", "SOLUSD"}
 
 # Order types you allow. Add STOP_LOSS_LIMIT, TAKE_PROFIT_LIMIT, etc. if you want them.
-ALLOWED_ORDER_TYPES = {"MARKET", "LIMIT"}
+ALLOWED_ORDER_TYPES = {"MARKET", "LIMIT", "LIMIT_MAKER", "STOP_LOSS_LIMIT", "TAKE_PROFIT_LIMIT"}
 
 # Binance.US USD pairs by default (BTCUSD). Change to "USDT" if your account uses USDT pairs.
 QUOTE_ASSET = "USD"

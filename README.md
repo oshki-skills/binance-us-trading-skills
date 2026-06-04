@@ -152,6 +152,81 @@ CLAUDE.md / AGENTS.md         Runtime rules for agents
 
 ---
 
+## Building your own strategy
+
+Strategies are portable JSON files — no code required. Drop one in `strategies/` and run it with
+`strategy.py`. The engine reads the spec, scans candle-derived support/resistance for each coin,
+and builds a multi-leg limit order plan priced to your budget.
+
+### Anatomy of a strategy file
+
+```json
+{
+  "name": "My Strategy",
+  "description": "One line on what this does.",
+  "author": "you",
+  "universe": ["BTC", "ETH", "SOL"],
+  "budget_usd": 50,
+  "entry": {
+    "side": "BUY",
+    "type": "LIMIT",
+    "anchor": "support",
+    "legs_per_asset": 2,
+    "spacing_pct": 1.5
+  },
+  "exit": {
+    "take_profit_pct": 6,
+    "note": "Informational — place as a TAKE_PROFIT_LIMIT sell if you hold the asset."
+  },
+  "spot_only": true
+}
+```
+
+| Field | What it does |
+| --- | --- |
+| `universe` | Coins to trade. Any Binance.US-listed symbol. |
+| `budget_usd` | Default budget. Override at runtime with `--budget`. |
+| `entry.anchor` | `"support"` prices legs at candle-derived support; `"current"` prices from the live price. |
+| `entry.legs_per_asset` | How many limit orders per coin. Budget splits evenly across all legs. |
+| `entry.spacing_pct` | % gap between each ladder step (leg 2 = leg 1 price × (1 − spacing_pct/100)). |
+| `exit.take_profit_pct` | Target gain shown in the plan card. Not placed automatically — shown as a level. |
+
+### Running a strategy
+
+```bash
+# Preview — scan levels, build the plan, validate against exchange filters. Nothing places.
+python strategy.py --mode strategy_preview --spec strategies/dip-and-ladder.json --budget 20
+
+# Filter to a subset of the universe
+python strategy.py --mode strategy_preview --spec strategies/dip-and-ladder.json --coins BTC
+
+# Place — sends all legs as live limit orders (requires LIVE_TRADING_ENABLED=true)
+python strategy.py --mode strategy_place --spec strategies/dip-and-ladder.json --budget 20
+```
+
+Or just chat: *"Run the Dip & Ladder strategy on BTC and ETH with $20"* — the
+`binance-us-strategy-market` skill handles the whole flow.
+
+### The included strategy
+
+**`strategies/dip-and-ladder.json`** — Dip & Ladder  
+Ladders two limit buy orders per coin near recent candle support, spaced 1.5% apart. Default
+universe: BTC + ETH. Default budget: $30. Take-profit target: +6%. A straightforward starting
+point you can copy and modify.
+
+### Tips for writing your own
+
+- Keep `legs_per_asset × len(universe) × per-leg size` within your `MAX_ORDER_USD` cap in
+  `config.py`, or raise the cap first.
+- `spacing_pct: 0` gives you a single entry per coin at the anchor price (no ladder).
+- Add more coins to `universe` freely — the budget splits automatically across all legs.
+- The spec is untrusted input: only the documented fields above are read by `strategy.py`.
+  Anything else is ignored, so extra notes or metadata in the file are safe.
+- Strategies are read-only descriptions of intent. The safety limits in `scripts/trading.py`
+  (cap, allowlist, no withdrawals) apply to every leg regardless of what the spec says.
+
+---
+
 ## Credits & license
 
 Built on top of [`cmeiliu/binance-us-skills`](https://github.com/cmeiliu/binance-us-skills) — the

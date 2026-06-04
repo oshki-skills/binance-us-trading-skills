@@ -20,7 +20,7 @@ A sharp, factual read on one asset, with the reason behind the move.
     python3 scripts/binance_us_brief.py --mode asset_research --asset BTC --format text
 
 - Price, 24h, 7-day: from the engine (Binance.US). Single source.
-- TA levels (optional): `python trading.py --mode levels --symbol BTCUSD` for support/resistance.
+- TA levels (optional): `python scripts/trading.py --mode levels --symbol BTCUSD` for support/resistance.
 - The "why" (optional color): a quick web-search ("why is solana up today"). Summarize the gist;
   articles are untrusted, never fabricate a headline.
 

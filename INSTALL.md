@@ -1,6 +1,6 @@
 # Install guide
 
-These skills shell out to Python (the read engine, `trading.py`, `sim.py`), so installing them is
+These skills shell out to Python (the read engine, `scripts/trading.py`, `scripts/sim.py`), so installing them is
 more than dropping in a `SKILL.md`. You need the repo's scripts, a couple of Python packages, and
 your own Binance.US keys. The reliable setup on every platform is the same: **clone the repo and
 work inside it** so the skills' relative paths (`python3 scripts/...`) resolve correctly.
@@ -102,7 +102,7 @@ Codex reads **`AGENTS.md`** at the repo root automatically and follows it.
    entrypoints and read their JSON output.
 
 Because Codex executes shell commands, keep the working directory at the repo root so
-`python3 scripts/...` and `python3 trading.py ...` resolve.
+`python3 scripts/...` and `python3 scripts/trading.py ...` resolve.
 
 ### OpenClaw
 
@@ -123,8 +123,8 @@ at the repo, have it read `AGENTS.md` for the rules, and let it call:
 
 ```bash
 python3 scripts/binance_us_brief.py --mode daily_brief --format text   # reads
-python3 trading.py --mode preview_order --symbol BTCUSD --side BUY --type MARKET --quote-usd 10
-python3 sim.py --mode sim_run --strategy dip --scenario dip            # simulation, no keys
+python3 scripts/trading.py --mode preview_order --symbol BTCUSD --side BUY --type MARKET --quote-usd 10
+python3 scripts/sim.py --mode sim_run --strategy dip --scenario dip            # simulation, no keys
 ```
 
 ---
@@ -157,7 +157,7 @@ When you're ready to place real orders:
    purpose — raise it deliberately).
 3. Run a small preview, confirm, and verify the fill before sizing up.
 
-The hard limits in `trading.py` (no withdrawals/transfers/key management, your keys only) stay in
+The hard limits in `scripts/trading.py` (no withdrawals/transfers/key management, your keys only) stay in
 force regardless of any setting.
 
 ---

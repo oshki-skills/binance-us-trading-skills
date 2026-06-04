@@ -3,7 +3,7 @@
 This repo is also runnable by Codex, OpenClaw, and other agent runtimes. The full project rules
 live in CLAUDE.md; follow them. Summary:
 
-- Skills call the engines (scripts/binance_us_brief.py for reads, trading.py for execution and
+- Skills call the engines (scripts/binance_us_brief.py for reads, scripts/trading.py for execution and
   levels) as a CLI and read the JSON. Never call an API directly from a skill.
 - Binance.US is the only source for price, portfolio, candles, and orders. Web-search is optional
   color. No paid data feeds.

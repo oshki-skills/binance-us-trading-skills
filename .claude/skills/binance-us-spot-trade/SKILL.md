@@ -1,10 +1,13 @@
 ---
 name: binance-us-spot-trade
-description: Guide a user through reviewing and executing a Binance.US spot trade safely and deliberately.
+description: >
+  DEPRECATED. Replaced by binance-us-trade, which previews and places real orders (single,
+  limit, and multi-leg) with confirmation. Do not use this skill; route trade intent to
+  binance-us-trade.
 ---
 
-# Binance.US Spot Trade
+# Binance.US Spot Trade (deprecated)
 
-Use this skill when the user already has an asset in mind and wants to review the next Binance.US spot action.
-
-Route to funding or research skills first if the setup is not ready.
+This review-only skill has been replaced by **binance-us-trade**, which interprets plain-language
+intent, previews the order as a dry-run, and places it on explicit confirmation. Route any buy or
+sell request to binance-us-trade.

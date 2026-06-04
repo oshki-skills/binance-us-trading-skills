@@ -105,7 +105,7 @@ Safety is layered, and the strongest guarantees are enforced in code — not con
 - Allowed order types
 - Quote asset (USD vs USDT)
 
-**Hard limits — enforced in `trading.py`, not configurable:**
+**Hard limits — enforced in `scripts/trading.py`, not configurable:**
 - **No withdrawals, transfers, or API-key management.** Those endpoints are blocked and cannot be
   called, by any skill, ever.
 - **Your keys only.** The code reads your credentials from your environment and nothing else.
@@ -136,8 +136,8 @@ A simple, auditable design — skills are thin; all market access goes through t
 
 ```
 scripts/binance_us_brief.py   Read engine — market data, balances, briefings
-trading.py                    Execution — signs orders, candle levels, hard safety limits
-sim.py                        Simulation — mock data only, no keys, no network
+scripts/trading.py            Execution — signs orders, candle levels, hard safety limits
+scripts/sim.py                Simulation — mock data only, no keys, no network
 config.py                     Tunable knobs (cap, allowlist, order types, quote asset)
 prompts/voice.md              Shared response voice
 skills/                       One SKILL.md per workflow

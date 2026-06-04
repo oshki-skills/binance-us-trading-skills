@@ -1,48 +1,35 @@
 ---
 name: binance-us-fund-account
-description: Guide a user through funding a Binance.US account in a safe, explicit workflow. Use when the user wants to add cash, asks how to fund Binance.US, asks why a deposit is pending, or needs the next step after a capital-readiness check.
-metadata:
-  version: 0.3.0
-  author: Binance.US
-license: MIT
+description: >
+  Use when the user asks how to add money or deposit: "how do I fund my account", "add cash",
+  "deposit USD". Plain step-by-step guidance. No engine call, no moving funds.
 ---
 
 # Binance.US Fund Account
 
-Use this skill when the user is trying to get capital ready on Binance.US.
+Friendly, plain guidance for getting cash into the account. This skill explains; it never moves
+funds (that's blocked, and it's the user's action in the app).
 
-## Use This Skill For
+## When to use
 
-- "How do I fund my Binance.US account?"
-- "What should I do next after capital readiness?"
-- "Why is my deposit pending?"
-- "How do I add cash so I can buy crypto?"
+- "How do I add money / fund my account?"
+- "How do I deposit USD / crypto?"
 
-## When Not To Use
+## How to answer
 
-- market summaries
-- asset research
-- automated trading requests
-- off-platform banking or tax advice
+- Walk the deposit options plainly (bank transfer / ACH, wire, crypto deposit), short and clear.
+- Point the user to the in-app deposit flow to actually do it.
+- If they ask what they can do once funded, hand off to binance-us-account-status or
+  binance-us-trade.
 
-## Workflow
+## Output (emoji format)
 
-1. Confirm whether the user already has Binance.US credentials or account access.
-2. If the user has account context, prefer a capital-readiness or account-status check first.
-3. If they need instructions, guide them through the next explicit Binance.US action:
-   - open Binance.US
-   - choose funding method
-   - enter amount
-   - confirm status after submission
-4. If the user reports a pending or failed deposit, route them toward account-status review and state what information matters.
+    💵 *Adding funds*
+    1. App → Deposit
+    2. Pick USD (bank/ACH) or a crypto deposit
+    3. Funds land, then you're ready to trade.
 
-## Handoffs
+## Voice and limits
 
-- If the user wants to know whether it is worth funding now, use `binance-us-briefing-engine` in `capital_readiness` mode first.
-- If the user wants to act on a specific asset after funding, hand off to `binance-us-asset-research` or a trading workflow.
-
-## Guardrails
-
-- Keep the guidance explicit and step-by-step.
-- Do not pretend funding succeeded if there is no account confirmation.
-- Keep the tone neutral and operational, not promotional.
+Apply prompts/voice.md. Guidance only. Never asks for or handles credentials. For account
+problems (login, verification), point to Binance.US Support.

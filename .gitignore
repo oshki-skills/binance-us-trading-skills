@@ -1,8 +1,7 @@
+.env
+.env.*
+**/secrets.env
 __pycache__/
 *.pyc
-.DS_Store
-.env
 .venv/
-node_modules/
-.claude/settings.local.json
-.playwright-cli/
+venv/

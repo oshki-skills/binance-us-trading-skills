@@ -1,45 +1,37 @@
 ---
 name: binance-us-account-status
-description: Review Binance.US account readiness, balances, deposits, pending states, and operational blockers. Use when the user asks what is happening in their account, why something is pending, or whether they are ready to act.
-metadata:
-  version: 0.3.0
-  author: Binance.US
-license: MIT
+description: >
+  Use for account state: "what's my balance", "what cash do I have", "am I ready to trade",
+  "what's blocking my deposit". Reports balances and trade-readiness plainly. Read only.
 ---
 
 # Binance.US Account Status
 
-Use this skill when the user needs operational clarity before taking action.
+Balances and readiness, no fluff.
 
-## Use This Skill For
+## When to use
 
-- "What is happening in my Binance.US account?"
-- "Why is my deposit pending?"
-- "Am I ready to trade?"
-- "What balances do I actually have available?"
+- "What's my balance / buying power?"
+- "Am I ready to trade?" / "What's blocking me?"
 
-## When Not To Use
+## Engine
 
-- broad market summaries
-- single-asset research
-- trade ideation without account context
+    python3 scripts/binance_us_brief.py --mode capital_readiness --format text
+    python3 scripts/binance_us_brief.py --mode portfolio_brief --format text
 
-## Workflow
+(If the engine exposes a dedicated account/status mode, prefer it; otherwise these cover balances
+and readiness.)
 
-1. Check whether account credentials are available.
-2. If they are not, say so clearly and switch to market-only fallback guidance.
-3. If they are, summarize:
-   - balances
-   - idle cash
-   - deposit recency or pending status
-   - concentration or readiness blockers
-4. Route the user to the right next skill:
-   - `binance-us-fund-account`
-   - `binance-us-spot-trade`
-   - `binance-us-briefing-engine`
+## Output (emoji format)
 
-## Guardrails
+    💼 *Account status*
+    💵 Cash available: $X
+    🟢 Holdings: BTC, ETH, SOL (~$Y total)
+    ✅ Ready to trade — or — ⚠️ {what's blocking}
 
-- Stay operational and factual.
-- Do not claim a deposit is complete unless account data confirms it.
-- Do not blend account-status questions with speculative market advice.
+Surface trade/deposit readiness plainly. Don't dump every tiny balance.
+
+## Voice and limits
+
+Apply prompts/voice.md. Factual. For how to add money, hand off to binance-us-fund-account. To
+trade, hand off to binance-us-trade.

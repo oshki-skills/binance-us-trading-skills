@@ -1,51 +1,16 @@
-# Binance.US Skills
+# AGENTS.md
 
-This repository contains a portable Binance.US skill family.
+This repo is also runnable by Codex, OpenClaw, and other agent runtimes. The full project rules
+live in CLAUDE.md; follow them. Summary:
 
-When the user asks for a Binance.US market brief, watchlist recap, opportunity alert, capital readiness check, portfolio brief, weekly reset, or deeper asset research, run the bundled Python script instead of rebuilding the logic manually.
+- Skills call the engines (scripts/binance_us_brief.py for reads, trading.py for execution and
+  levels) as a CLI and read the JSON. Never call an API directly from a skill.
+- Binance.US is the only source for price, portfolio, candles, and orders. Web-search is optional
+  color. No paid data feeds.
+- Trading is dry-run by default; place_order / place_multi require LIVE_TRADING_ENABLED=true.
+  Always preview, always confirm. Never call withdrawal/transfer/key endpoints. Your keys only.
+- Voice: prompts/voice.md (sharp, plain, emoji-led, no profit promises, no "so buy").
+- Credentials: a `.env` in the repo root (BINANCE_US_API_KEY, BINANCE_US_SECRET_KEY,
+  LIVE_TRADING_ENABLED). Keep it gitignored.
 
-## Entrypoint
-
-```bash
-python3 scripts/binance_us_brief.py --mode daily_brief --format text
-```
-
-Useful modes:
-
-- `daily_brief`
-- `watchlist_brief`
-- `opportunity_alert`
-- `capital_readiness`
-- `weekly_reset`
-- `portfolio_brief`
-- `asset_research`
-
-Useful flags:
-
-- `--watchlist BTC,ETH,SOL`
-- `--asset BTC`
-- `--format text|json|both`
-- `--limit 6`
-- `--news-limit 3`
-
-## Credentials
-
-This workflow is read-only and expects only user-scoped Binance.US credentials:
-
-- `BINANCE_US_API_KEY`
-- `BINANCE_US_SECRET_KEY`
-
-If credentials are not present, the script falls back to a clearly labeled market-only mode.
-
-## Output expectations
-
-Prefer the script's rendered text output for delivery. It already includes:
-
-- actual prices
-- 24h and 7-day framing
-- market context and catalyst watch
-- watchlist gaps
-- cash and funding framing
-- a balanced bull case and case for patience
-
-Keep the brief informational. Do not present the output as financial advice.
+See README.md for the skill list and WALKTHROUGH.md for setup.

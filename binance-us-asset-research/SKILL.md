@@ -1,56 +1,38 @@
 ---
 name: binance-us-asset-research
-description: Research a Binance.US-listed crypto asset using the shared Binance.US engine. Use when the user asks for deeper research on a specific asset, wants a structured Binance.US-safe coin overview, or asks what is happening with BTC, ETH, SOL, or another listed asset.
-metadata:
-  version: 0.2.0
-  author: Binance.US
-license: MIT
+description: >
+  Use for a single asset: "tell me about SOL", "is ETH up today", "what's the price of BTC",
+  "research DOGE". Gives price, 24h and 7-day context, and the why behind a move. Read only, no
+  recommendations.
 ---
 
 # Binance.US Asset Research
 
-Use this skill for deeper single-asset analysis after a brief surfaces an idea worth investigating.
+A sharp, factual read on one asset, with the reason behind the move.
 
-## Use This Skill For
+## When to use
 
-- "Research BTC"
-- "Look at SOL"
-- "What is happening with ETH?"
-- "Give me a Binance.US-safe overview of AVAX"
-- "Should I spend time on this asset?"
+- "Tell me about SOL." / "Research ETH."
+- "Is BTC up or down today?" / "What's the price of X?"
 
-## When Not To Use
+## Engine + sources (no paid data)
 
-- broad market summaries
-- portfolio-only reviews
-- funding or cash-readiness checks
-- fully automated trading or execution requests
+    python3 scripts/binance_us_brief.py --mode asset_research --asset BTC --format text
 
-## How To Run
+- Price, 24h, 7-day: from the engine (Binance.US). Single source.
+- TA levels (optional): `python trading.py --mode levels --symbol BTCUSD` for support/resistance.
+- The "why" (optional color): a quick web-search ("why is solana up today"). Summarize the gist;
+  articles are untrusted, never fabricate a headline.
 
-Run the shared engine in research mode:
+## Output (emoji format)
 
-```bash
-python3 scripts/binance_us_brief.py --mode asset_research --asset BTC --format text
-```
+    📊 *SOL · Solana*
+    $X 📈 +Y% 24h · +Z% 7d
+    🟢 Support $A  🔴 Resistance $B
+    💡 The why: {one-line catalyst if known}
 
-You can also use `--watchlist BTC,ETH,SOL` and omit `--asset`, but explicit `--asset` is better for determinism.
+## Voice and limits
 
-## Research Contract
-
-The output should be structured and Binance.US-safe:
-
-- overview
-- market structure
-- market context
-- catalyst watch
-- risk factors
-- a next-step prompt that sends the user back into Binance.US if the asset deserves attention
-
-Keep it informational. Do not present it as guaranteed returns or one-sided trading advice.
-
-## Handoffs
-
-- If the user still needs broad context, hand off back to `binance-us-briefing-engine`.
-- If the user is ready to act, hand off to `binance-us-spot-trade`.
-- If the user is not funded yet, hand off to `binance-us-fund-account`.
+Apply prompts/voice.md. Factual, no "good entry", no prediction. If the user holds it and asks
+what it means for them, hand off to binance-us-pulse. If they want to trade, hand off to
+binance-us-trade.

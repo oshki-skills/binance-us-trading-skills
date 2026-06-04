@@ -5,3 +5,12 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+
+# Internal/private build & instruction docs — keep local, never publish
+BUILD_PLAN.md
+DEMO_SCRIPT.md
+END_TO_END.md
+SKILLS_ANALYSIS.md
+SKILLS_UPGRADE.md
+SYNC.md
+WALKTHROUGH.md

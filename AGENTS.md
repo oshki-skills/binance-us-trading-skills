@@ -13,4 +13,5 @@ live in CLAUDE.md; follow them. Summary:
 - Credentials: a `.env` in the repo root (BINANCE_US_API_KEY, BINANCE_US_SECRET_KEY,
   LIVE_TRADING_ENABLED). Keep it gitignored.
 
-See README.md for the skill list and WALKTHROUGH.md for setup.
+See README.md for the skill list and INSTALL.md for per-platform setup (Claude Code, Codex,
+OpenClaw, and other runtimes).
